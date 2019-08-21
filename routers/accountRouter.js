@@ -25,6 +25,19 @@ router.get('/:id', (req, res) => {
         })
   })
 
+router.post('/', (req, res) =>{
+    const { body } = req;
+
+    accountDb('accounts')
+        .insert(body, 'id')
+        .then(post => {
+            res.status(201).json(post)
+        })
+        .catch(err => {
+            res.status(500).json({ error: 'Error creating account' })
+        })
+})
+
 
 
 module.exports = router;
