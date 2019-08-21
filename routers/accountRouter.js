@@ -38,6 +38,35 @@ router.post('/', (req, res) =>{
         })
 })
 
+router.put('/:id', (req, res) => {
+    const changes = req.body;
+    const { id } = req.params;
+
+    accountDb('accounts')
+        .where('id', '=', id)
+        .update(changes)
+        .then(acc => {
+            res.status(201).json(acc)
+        })
+        .catch(err => {
+            res.status(500).json({ error: 'Error updating account' })
+        })
+})
+
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+
+    accountDb('accounts')
+        .where('id', '=', id)
+        .del()
+        .then(acc => {
+            res.status(201).json(acc)
+        })
+        .catch(err => {
+            res.status(500).json({ error: 'Error deleting account' })
+        })
+})
+
 
 
 module.exports = router;
